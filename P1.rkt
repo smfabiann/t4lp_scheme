@@ -14,6 +14,7 @@
     )
 )
 
+;; ejemplos del pdf
 (coincide? 3 '(pan ketchup lechuga))
 (coincide? 0 '( ) )
 (coincide? 2 '( hamburguesa queso tomate ) )
