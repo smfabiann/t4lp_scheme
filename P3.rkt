@@ -11,7 +11,7 @@
 (define (secuencia-rotacional fs inicio xs)
     (if (null? xs)
         '()
-        (cons
+        (cons   ;; operacion para que funcione la recursividad
             ((car fs) inicio (car xs))
             (secuencia-rotacional (rotar fs) ((car fs) inicio (car xs)) (cdr xs))
         ))
