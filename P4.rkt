@@ -1,22 +1,41 @@
 #lang scheme
 
-(define (busqueda-rama rama producto n)
-    (if (null? rama)
-        '()
-        (busqueda-rama-aux (cdr rama) producto n (cdr rama))
-    )       
-)
-
+;; Busca las rutas para encontrar un producto 'producto' en un arbol N-ario (lista compuesta) 'arbol'.
+;; Retorna las rutas en forma de listas reprecentado los indices de la lista compuesta
+;;
+;; arbol : lista compuesta reprecentando el arbol N-ario
+;; producto : elemento a buscar en el arbol
 (define (busqueda-almacen arbol producto)
-    ;; auxiliar para poder guardado las iteraciones del loop
-    (define (auxiliar arbol producto n)
-        (if (null? arbol)   ;; iteramos
+    ;; Misma funcionalidad que 'bisqueda-almacen' pero con la capasidad de guardar el recorrido, asi
+    ;; poder usar recursividad mientras se guarda el recorrido de la busqueda.
+    ;;
+    ;; arbol : lista compuesta reprecentando el arbol N-ario
+    ;; producto : elemento a buscar en el arbol
+    ;; recorrido : lista que guarda el recorrido de la busqueda
+    (define (auxiliar ls producto recorrido)
+        (if (null? ls)   ;; iteramos
             '()
-            ((i (+ 1 (length ruta))))
+            (let ((i (+ 1 (length recorrido))))   ;; creamos la variable i
+                (if (list? (car ls))
+                    ;; si es una lista, seguimos buscando
+                    (append
+                        (auxiliar (car ls) producto (append recorrido (list i)))  
+                        (auxiliar (cdr ls) producto recorrido)  ;; continuamos con el resto de la lista
+                    )
+                    ;; sino, vemos si encontramos el producto
+                    (if (eq? (car ls) producto)  
+                        ;; si encontramos el producto
+                        (cons (append recorrido (list i))  ;; guardamos el recorrido
+                                (auxiliar (cdr ls) producto recorrido))  ;; continuamos con el resto de la lista
+                        ;; si no es el producto
+                        (auxiliar (cdr ls) producto recorrido)  ;; seguimos buscando
+                    )
+                )
+            )  ;; 
         )
     )
-    ;; partimos de la operacion 0
-    (auxiliar arbol producto 0)
+    ;; partimos saltando el primer elemento "bodega"
+    (auxiliar (cdr arbol) producto '())
 )
 
 

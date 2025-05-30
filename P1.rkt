@@ -1,5 +1,9 @@
 #lang scheme
 
+;; retorna true cuando la longitud de las 'lista' es la misma que el numero 'n'
+;;
+;; numero : int a comparar con la longitud de la lista
+;; lista : la lista con la que se compara n
 (define (coincide? numero lista)
     (if (null? lista)
         (if (= numero 0)    ;; se verifica si el numero es 0, caso para detener la recursión
