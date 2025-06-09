@@ -1,17 +1,16 @@
 #lang scheme
 
-;; retorna true cuando la longitud de las 'lista' es la misma que el numero 'n'
-;;
-;; n : int a comparar con la longitud de la lista
-;; ls : la lista con la que se compara n
-(define (coincide? n ls)
+;; funcion auxiliar de coinside
+;; da la longitud de una lista
+(define (longa ls)
     (if (null? ls)
-        (if (= n 0)    ;; se verifica si el n es 0, caso para detener la recursión
-            true    ;; si es 0, se devuelve true, significando que hay una misma cantidad e elementos
-            false)  ;; si se agora la lista y el n no es 0, se devuelve false, significando que no tienen la misma cantidad
-        ;; se le resta 1 al n y se devuelve la lista sin el primer elemento
-        (coincide? (- n 1) (cdr ls)) ;; Recurcion en cola
-    )
+        0
+        (+ 1 (longa (cdr ls)))))
+
+(define (coincide? n ls)
+    (if (eq? n (longa ls))
+        true
+        false)
 )
 
 ;; ejemplos del pdf
